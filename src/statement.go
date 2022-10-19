@@ -3,8 +3,8 @@ package main
 type StatementType int
 
 const (
-	Memory StatementType = iota
-	Arithmetic
+	MemoryType StatementType = iota
+	ArithmeticType
 )
 
 type Statement interface {

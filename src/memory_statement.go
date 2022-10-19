@@ -5,3 +5,7 @@ type MemoryStatement struct {
 	Segment string
 	Index   int
 }
+
+func (stmt MemoryStatement) GetType() StatementType {
+	return MemoryType
+}
