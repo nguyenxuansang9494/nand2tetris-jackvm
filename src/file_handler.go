@@ -5,14 +5,14 @@ import (
 	"os"
 )
 
-var OpenedFile string = ""
+var HandledFile string = ""
 
 func ReadFile(path string) *bufio.Scanner {
 	file, err := os.Open(path)
 	if err != nil {
 		panic("failed to open file")
 	}
-	OpenedFile = file.Name()
+	HandledFile = file.Name()
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
 	return fileScanner
