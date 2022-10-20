@@ -17,7 +17,7 @@ func TranslateMemoryStatement(stmt MemoryStatement) []string {
 }
 
 func translatePopStatement(stmt MemoryStatement) []string {
-	rs := make([]string, 9)
+	rs := make([]string, 13)
 	if stmt.Segment == "local" || stmt.Segment == "argument" || stmt.Segment == "this" || stmt.Segment == "that" {
 		rs = append(rs, "@"+segmentMap[stmt.Segment])
 		rs = append(rs, "D=M")
@@ -33,11 +33,34 @@ func translatePopStatement(stmt MemoryStatement) []string {
 		rs = append(rs, "A=M")
 		rs = append(rs, "M=D")
 	} else if stmt.Segment == "static" {
-		// TODO
+		rs = append(rs, "@SP")
+		rs = append(rs, "M=M-1")
+		rs = append(rs, "A=M+1")
+		rs = append(rs, "D=M")
+		rs = append(rs, "@"+HandledFile+"."+stmt.Index)
+		rs = append(rs, "M=D")
 	} else if stmt.Segment == "temp" {
-		// TODO
+		stmtIndex, _ := strconv.Atoi(stmt.Index)
+		index := strconv.Itoa(stmtIndex + 5)
+		rs = append(rs, "@SP")
+		rs = append(rs, "M=M-1")
+		rs = append(rs, "A=M+1")
+		rs = append(rs, "D=M")
+		rs = append(rs, "@"+index)
+		rs = append(rs, "M=D")
 	} else if stmt.Segment == "pointer" {
-		// TODO
+		rs = append(rs, "@SP")
+		rs = append(rs, "M=M-1")
+		rs = append(rs, "A=M+1")
+		rs = append(rs, "D=M")
+		switch stmt.Index {
+		case "0":
+			rs = append(rs, "@this")
+			rs = append(rs, "M=D")
+		case "1":
+			rs = append(rs, "@that")
+			rs = append(rs, "M=D")
+		}
 	}
 	return rs
 }
