@@ -17,7 +17,29 @@ func TranslateMemoryStatement(stmt MemoryStatement) []string {
 }
 
 func translatePopStatement(stmt MemoryStatement) []string {
-	return nil
+	rs := make([]string, 9)
+	if stmt.Segment == "local" || stmt.Segment == "argument" || stmt.Segment == "this" || stmt.Segment == "that" {
+		rs = append(rs, "@"+segmentMap[stmt.Segment])
+		rs = append(rs, "D=M")
+		rs = append(rs, "@"+stmt.Index)
+		rs = append(rs, "D=D+A")
+		rs = append(rs, "@13")
+		rs = append(rs, "M=D")
+		rs = append(rs, "@SP")
+		rs = append(rs, "M=M-1")
+		rs = append(rs, "A=M+1")
+		rs = append(rs, "D=M")
+		rs = append(rs, "@13")
+		rs = append(rs, "A=M")
+		rs = append(rs, "M=D")
+	} else if stmt.Segment == "static" {
+		// TODO
+	} else if stmt.Segment == "temp" {
+		// TODO
+	} else if stmt.Segment == "pointer" {
+		// TODO
+	}
+	return rs
 }
 
 func translatePushStatement(stmt MemoryStatement) []string {
