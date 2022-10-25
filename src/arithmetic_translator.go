@@ -27,6 +27,13 @@ func translateBinaryOperation(stmt ArithmeticStatement) []string {
 	rs = append(rs, "A=M-1")
 	if stmt.Command == "add" {
 		rs = append(rs, "M=D+M")
+	} else if stmt.Command == "sub" {
+		rs = append(rs, "M=M-D")
+	} else if stmt.Command == "and" {
+		rs = append(rs, "M=D&M")
+	} else if stmt.Command == "or" {
+		rs = append(rs, "M=D|M")
 	}
+
 	return rs
 }

@@ -23,11 +23,11 @@ func translatePopStatement(stmt MemoryStatement) []string {
 		rs = append(rs, "D=M")
 		rs = append(rs, "@"+stmt.Index)
 		rs = append(rs, "D=D+A")
-		rs = append(rs, "@13")
+		rs = append(rs, "@R13")
 		rs = append(rs, "M=D")
 		rs = append(rs, "@SP")
 		rs = append(rs, "MD=M-1")
-		rs = append(rs, "@13")
+		rs = append(rs, "@R13")
 		rs = append(rs, "A=M")
 		rs = append(rs, "M=D")
 	} else if stmt.Segment == "static" {
