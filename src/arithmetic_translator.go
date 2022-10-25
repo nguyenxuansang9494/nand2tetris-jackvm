@@ -25,5 +25,8 @@ func translateBinaryOperation(stmt ArithmeticStatement) []string {
 	rs = append(rs, "D=M")
 	rs = append(rs, "@SP")
 	rs = append(rs, "A=M-1")
-	return nil
+	if stmt.Command == "add" {
+		rs = append(rs, "M=D+M")
+	}
+	return rs
 }
